@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    use HasRoles;
+    protected $guard_name = 'web';
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -21,8 +25,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar_path',
+        'phone',
+        'bio',
     ];
+    public function getAvatarUrlAttribute(): ?string
+    {
+        if (!$this->avatar_path) {
+            return null;
+        }
 
+        // Opsi 1 (disarankan): gunakan Storage::url()
+        return Storage::url($this->avatar_path);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
