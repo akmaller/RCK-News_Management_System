@@ -1,61 +1,132 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <a href="https://news.roemahcita.id" target="_blank">
+    <img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo">
+  </a>
 </p>
 
-## About Laravel
+<p align="center">
+<a href="https://github.com/akmaller/RCK-News_Management_System/actions"><img src="https://img.shields.io/github/actions/workflow/status/akmaller/RCK-News_Management_System/laravel.yml?branch=main" alt="Build Status"></a>
+<a href="https://packagist.org/packages/intervention/image"><img src="https://img.shields.io/packagist/dt/intervention/image" alt="Intervention Image Downloads"></a>
+<a href="https://github.com/akmaller/RCK-News_Management_System/releases"><img src="https://img.shields.io/github/v/release/akmaller/RCK-News_Management_System" alt="Latest Stable Version"></a>
+<a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="License"></a>
+</p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📰 RCK News Management System
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+**RCK News Management System** adalah aplikasi berita berbasis **Laravel 12** dan **Filament v4**, dikembangkan untuk mengelola konten berita, kategori, user, serta mendukung optimasi gambar otomatis (resize, compress, dan generate WebP).
 
-## Learning Laravel
+### ✨ Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   Manajemen berita, kategori, user, dan redaksi dengan **Filament v4**.
+-   **Auto compress image** + generate **WebP** untuk performa cepat.
+-   Upload image melalui **Filament FileUpload** ke `storage/public`.
+-   Responsive frontend (Blade + Alpine.js).
+-   Siap untuk deployment di server production.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🚀 Persiapan Server
 
-## Laravel Sponsors
+Pastikan server memiliki:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+-   **PHP 8.3** + Composer
+-   **MySQL/MariaDB**
+-   Ekstensi PHP: `imagick` atau `gd`, `mbstring`, `curl`, `pdo_mysql`, `openssl`, `tokenizer`, `xml`, `ctype`, `json`, `fileinfo`, `zip`, `bcmath`
+-   Web server: **Nginx** / **Apache**
+-   (Opsional) CLI image optimizer: `jpegoptim`, `optipng`, `pngquant`, `gifsicle`, `webp`
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 📦 Instalasi
 
-## Contributing
+```bash
+git clone https://github.com/akmaller/RCK-News_Management_System.git
+cd RCK-News_Management_System
+composer install --no-dev --optimize-autoloader
+cp .env.example .env
+php artisan key:generate
+php artisan storage:link
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Konfigurasi `.env` sesuai environment (DB, APP_URL, dll).
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🗄️ Database
 
-## Security Vulnerabilities
+Jalankan migration:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+php artisan migrate --force
+```
 
-## License
+Buat user admin Filament:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+php artisan make:filament-user
+```
+
+---
+
+## 🔑 Permission
+
+```bash
+mkdir -p storage/framework/{cache,sessions,views}
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+```
+
+---
+
+## 🌐 Konfigurasi Nginx (contoh)
+
+```nginx
+server {
+    server_name news.roemahcita.id;
+    root /www/wwwroot/RCK-News_Management_System/public;
+
+    index index.php index.html;
+    client_max_body_size 16m;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+    }
+}
+```
+
+---
+
+## 🔄 Deployment Update
+
+```bash
+git pull origin main
+composer install --no-dev --optimize-autoloader
+php artisan migrate --force
+php artisan optimize:clear
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+chown -R www-data:www-data storage bootstrap/cache
+```
+
+---
+
+## 📝 License
+
+Project ini dirilis di bawah lisensi [MIT](https://opensource.org/licenses/MIT).
+
+---
+
+## 👤 Author
+
+Akmaller
+Dikembangkan oleh **PT. Roemah Cita Kreatif**  
+✉️ info@roemahcita.id  
+🌐 [roemahcita.id](https://roemahcita.id)
