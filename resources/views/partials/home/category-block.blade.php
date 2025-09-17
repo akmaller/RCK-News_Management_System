@@ -15,11 +15,17 @@
     <div class="divide-y divide-neutral-200">
         @forelse ($posts as $post)
             <a href="{{ $post->permalink }}" class="flex gap-4 p-4 hover:bg-neutral-50">
-                <div class="shrink-0 w-28 h-20 sm:w-32 sm:h-24 overflow-hidden rounded-xl ring-1 ring-neutral-200">
+                <div class="shrink-0 w-28 h-20 sm:w-32 aspect-[16/9] overflow-hidden rounded-xl ring-1 ring-neutral-200">
+                    @php
+                        $origUrl = $post->thumbnail ? asset('storage/'.$post->thumbnail) : asset('images/example.webp');
+                        $baseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $origUrl);
+                        $jpgSmall  = preg_replace('/\.(jpe?g|png|webp)$/i', '-thumb.jpg',  $origUrl);
+                        $webpSmall  = $baseNoExt . '-small.webp';
+                    @endphp
                     <img
-                        src="{{ $post->thumbnail ? asset('storage/'.$post->thumbnail) : 'https://picsum.photos/220/160?random='.$post->id }}"
+                        src="{{ $webpSmall }}"
                         alt="{{ $post->title }}"
-                        class="w-full aspect-[16/9] object-cover" decoding="async" loading="lazy">
+                        class="w-full h-auto object-cover" decoding="async" loading="lazy">
                 </div>
                 <div class="flex-1">
                     <h3 class="text-base sm:text-lg font-semibold leading-snug">

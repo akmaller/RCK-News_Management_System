@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Builder;
 use App\Models\Post;
 use BackedEnum;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Schemas\Components\Section; // container v4
@@ -111,6 +112,8 @@ class PostResource extends Resource
                             ->image()
                             ->disk('public')
                             ->directory('posts')
+                            ->maxSize(2048)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                             ->visibility('public'),
 
                         Forms\Components\Select::make('status')

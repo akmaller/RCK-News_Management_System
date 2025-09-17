@@ -14,12 +14,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // buat user admin kalau belum ada, kalau sudah ada → update
+        User::updateOrCreate(
+            ['email' => 'admin@rckmanagement.com'],
+            [
+                'name' => 'RCK Management Admin',
+                'password' => Hash::make('password123'),
+                'email_verified_at' => now(),
+            ]
+        );
 
-        User::factory()->create([
-            'name' => 'RCK Management Admin',
-            'email' => 'admin@rckmanagement.com',
-            'password' => Hash::make('password123'),
+        // panggil seeder lain
+        // $this->call([
+        //     SiteSettingsSeeder::class,
+        // ]);
+        $this->call([
+            CategorySeeder::class,
+        ]);
+        $this->call([
+            RolesSeeder::class,
         ]);
     }
 }

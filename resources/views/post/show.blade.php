@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-@php
-    use Illuminate\Support\Facades\Storage;
-@endphp
+
 
 @section('content')
 
@@ -32,16 +30,16 @@
         </time>
       </div>
 
-      {{-- Gambar utama --}}
-      @php
-        $cover = $post->thumbnail
-          ? asset('storage/'.$post->thumbnail)
-          : asset('images/placeholder-1200x675.jpg'); // siapkan placeholder sesuai kamu
-      @endphp
-      <figure class="mt-5 rounded-xl overflow-hidden bg-neutral-100">
-        <img src="{{ $cover }}" alt="{{ $post->title }}"
-             class="w-full aspect-[16/9] object-cover" width="1280" height="720" decoding="async" fetchpriority="high" >
-      </figure>
+      <figure  class="mt-5 rounded-xl overflow-hidden bg-neutral-100">
+        @php
+            $origUrl = $post->thumbnail ? asset('storage/'.$post->thumbnail) : asset('images/example.webp');
+            $baseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $origUrl);
+            $jpgThumb  = preg_replace('/\.(jpe?g|png|webp)$/i', '-thumb.jpg',  $origUrl);
+            $webpThumb  = $baseNoExt . '-thumb.webp';
+        @endphp
+            <source srcset="{{ $webpThumb }}" type="image/webp">
+            <img src="{{ $webpThumb }}" alt="{{ $post->title }}" class="w-full aspect-[16/9] object-cover" width="1280" height="720" decoding="async" fetchpriority="high" loading="lazy">
+        </figure>
 
       {{-- Isi --}}
       <div class="prose prose-neutral max-w-none mt-6 post-content">
@@ -120,13 +118,16 @@
               @php
                 $relCover = $rel->thumbnail
                   ? asset('storage/'.$rel->thumbnail)
-                  : asset('images/placeholder-600x338.jpg');
+                  : asset('images/example.webp');
+                $relbaseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $relCover);
+                $reljpgSmall  = preg_replace('/\.(jpe?g|png|webp)$/i', '-small.jpg',  $relCover);
+                $relwebpSmall  = $relbaseNoExt . '-small.webp';
               @endphp
               <a href="{{ route('posts.show', ['tahun'=>$rel->published_at?->format('Y'),'bulan'=>$rel->published_at?->format('m'),'slug'=>$rel->slug]) }}"
                  class="group block rounded-xl overflow-hidden ring-1 ring-neutral-200 hover:ring-amber-200 bg-white">
                 <div class="aspect-[16/9] overflow-hidden bg-neutral-100">
-                  <img src="{{ $relCover }}" alt="{{ $rel->title }}"
-                       class="w-full aspect-[16/9] object-cover group-hover:opacity-95 transition" width="640" height="360" decoding="async" loading="lazy">
+                  <img src="{{ $relwebpSmall }}" alt="{{ $rel->title }}"
+                       class="w-full aspect-[16/9] object-cover group-hover:opacity-95 transition" decoding="async" loading="lazy">
                 </div>
                 <div class="p-3">
                   <div class="text-xs text-neutral-500 mb-1">
@@ -154,14 +155,17 @@
           <ul class="space-y-3">
             @foreach($popularPosts as $item)
               @php
-                $thumb = $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/placeholder-300x170.jpg');
+                $thumb = $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/example.webp');
+                $thumbbaseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $thumb);
+                $thumbjpgSmall  = preg_replace('/\.(jpe?g|png|webp)$/i', '-small.jpg',  $thumb);
+                $thumbwebpSmall  = $thumbbaseNoExt . '-small.webp';
               @endphp
               <li>
                 <a href="{{ route('posts.show', ['tahun'=>$item->published_at?->format('Y'),'bulan'=>$item->published_at?->format('m'),'slug'=>$item->slug]) }}"
                    class="grid grid-cols-12 gap-3 items-center rounded-lg hover:bg-neutral-50 p-2">
                   <div class="col-span-4">
                     <div class="aspect-[16/10] rounded-md overflow-hidden bg-neutral-100">
-                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-24 h-16 rounded object-cover flex-none"  width="192" height="128" decoding="async" loading="lazy">
+                      <img src="{{ $thumbwebpSmall }}" alt="{{ $item->title }}" class="w-full h-auto rounded object-cover flex-none"  decoding="async" loading="lazy">
                     </div>
                   </div>
                   <div class="col-span-8">
@@ -190,14 +194,17 @@
           <ul class="space-y-3">
             @foreach($latest as $item)
               @php
-                $thumb = $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/placeholder-300x170.jpg');
+                $thumb = $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/example.webp');
+                $thumbbaseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $thumb);
+                $thumbjpgSmall  = preg_replace('/\.(jpe?g|png|webp)$/i', '-small.jpg',  $thumb);
+                $thumbwebpSmall  = $thumbbaseNoExt . '-small.webp';
               @endphp
               <li>
                 <a href="{{ route('posts.show', ['tahun'=>$item->published_at?->format('Y'),'bulan'=>$item->published_at?->format('m'),'slug'=>$item->slug]) }}"
                    class="grid grid-cols-12 gap-3 items-center rounded-lg hover:bg-neutral-50 p-2">
                   <div class="col-span-4">
                     <div class="aspect-[16/10] rounded-md overflow-hidden bg-neutral-100">
-                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-24 h-16 rounded object-cover flex-none"  width="192" height="128" decoding="async" loading="lazy">
+                      <img src="{{ $thumbwebpSmall }}" alt="{{ $item->title }}" class="w-full h-auto rounded object-cover flex-none"  width="192" height="128" decoding="async" loading="lazy">
                     </div>
                   </div>
                   <div class="col-span-8">
