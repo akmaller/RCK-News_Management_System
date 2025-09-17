@@ -62,6 +62,12 @@ Jalankan migration:
 php artisan migrate --force
 ```
 
+Jalankan migration:
+
+```bash
+php artisan db:seed
+```
+
 Buat user admin Filament:
 
 ```bash
