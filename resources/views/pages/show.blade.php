@@ -13,13 +13,17 @@
     <div class="grid grid-cols-12 gap-6">
             {{-- Konten --}}
             <article class="lg:col-span-8">
-
-
                 @if(!empty($page->thumbnail))
                     <figure class="mt-6">
+                        @php
+                            $pageorigUrl = $page->thumbnail;
+                            $pagebaseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $pageorigUrl);
+                            $pagejpgThumb  = preg_replace('/\.(jpe?g|png|webp)$/i', '-thumb.jpg',  $pageorigUrl);
+                            $pagewebpThumb  = $pagebaseNoExt . '-thumb.webp';
+                        @endphp
                         <img
                             class="w-full rounded-xl object-cover"
-                            src="{{ asset('storage/'.$page->thumbnail) }}"
+                            src="{{ asset('storage/'.$pagewebpThumb) }}"
                             alt="{{ $page->title }}"
                             loading="lazy">
                     </figure>
@@ -49,15 +53,18 @@
           <h2 class="text-lg font-semibold mb-3">Terbaru</h2>
           <ul class="space-y-3">
             @foreach($latestPosts as $item)
-              @php
-                $thumb = $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/placeholder-300x170.jpg');
-              @endphp
+               @php
+                    $origUrl = $item->thumbnail ? asset('storage/'.$item->thumbnail) : asset('images/example.webp');
+                    $baseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $origUrl);
+                    $jpgThumb  = preg_replace('/\.(jpe?g|png|webp)$/i', '-thumb.jpg',  $origUrl);
+                    $webpThumb  = $baseNoExt . '-thumb.webp';
+                @endphp
               <li>
                 <a href="{{ route('posts.show', ['tahun'=>$item->published_at?->format('Y'),'bulan'=>$item->published_at?->format('m'),'slug'=>$item->slug]) }}"
                    class="grid grid-cols-12 gap-3 items-center rounded-lg hover:bg-neutral-50 p-2">
                   <div class="col-span-4">
                     <div class="aspect-[16/10] rounded-md overflow-hidden bg-neutral-100">
-                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                      <img src="{{ $webpThumb }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
                     </div>
                   </div>
                   <div class="col-span-8">

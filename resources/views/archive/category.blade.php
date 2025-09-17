@@ -12,7 +12,13 @@
             <article class="bg-white rounded-xl overflow-hidden shadow ring-1 ring-neutral-200 hover:shadow-md transition">
                 <a href="{{ $post->permalink }}">
                     <div class="aspect-[16/9] overflow-hidden">
-                        <img src="{{ $post->thumbnail ? asset('storage/'.$post->thumbnail) : 'https://picsum.photos/600/338?random='.$post->id }}"
+                        @php
+                            $origUrl = $post->thumbnail ? asset('storage/'.$post->thumbnail) : asset('images/example.webp');
+                            $baseNoExt = preg_replace('/\.(jpe?g|png|webp)$/i', '', $origUrl);
+                            $jpgMed  = preg_replace('/\.(jpe?g|png|webp)$/i', '-thumb.jpg',  $origUrl);
+                            $webpMed  = $baseNoExt . '-middle.webp';
+                        @endphp
+                        <img src="{{ $webpMed }}"
                              alt="{{ $post->title }}" class="w-full h-full object-cover">
                     </div>
                 </a>
