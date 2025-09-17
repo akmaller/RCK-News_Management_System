@@ -1,3 +1,7 @@
+@push('head')
+  <link rel="preconnect" href="{{ config('app.url') }}" crossorigin>
+  <link rel="dns-prefetch" href="{{ config('app.url') }}">
+@endpush
 <header
     x-data="{ open:false, sub:null }"
     class="bg-white/90 backdrop-blur border-b border-neutral-200"
@@ -7,7 +11,7 @@
         {{-- Logo --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3">
                 @if($settings?->logo_path)
-                    <img src="{{ asset('storage/'.$settings->logo_path) }}" alt="{{ $settings->site_name }}" class="h-8 w-auto">
+                    <img src="{{ asset('storage/'.$settings->logo_path) }}" alt="{{ $settings->site_name }}" class="h-8 w-auto" width="160" height="40" fetchpriority="low">
                 @else
                     <span class="font-bold text-lg">{{ $settings->site_name ?? config('app.name') }}</span>
                 @endif
@@ -71,14 +75,12 @@
         >
             {{-- Ikon hamburger (tampil saat closed) --}}
             <svg x-cloak x-show="!open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
 
             {{-- Ikon close (tampil saat open) --}}
             <svg x-cloak x-show="open" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
         </button>
 
@@ -108,6 +110,8 @@
                         @else
                             <div class="border rounded-lg">
                                 <button
+                                    x-on:mouseenter.passive
+                                    x-on:mouseleave.passive
                                     @click="sub === {{ $item->id }} ? sub = null : sub = {{ $item->id }}"
                                     class="w-full flex items-center justify-between px-3 py-2 text-left text-sm font-medium"
                                 >

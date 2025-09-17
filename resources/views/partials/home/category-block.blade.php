@@ -19,7 +19,7 @@
                     <img
                         src="{{ $post->thumbnail ? asset('storage/'.$post->thumbnail) : 'https://picsum.photos/220/160?random='.$post->id }}"
                         alt="{{ $post->title }}"
-                        class="w-full h-full object-cover">
+                        class="w-full aspect-[16/9] object-cover" decoding="async" loading="lazy">
                 </div>
                 <div class="flex-1">
                     <h3 class="text-base sm:text-lg font-semibold leading-snug">

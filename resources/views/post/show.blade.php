@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-
-{{-- @section('meta_description', $post->seo_description ?? \Illuminate\Support\Str::limit(strip_tags($post->excerpt ?? $post->title), 160)) --}}
-
 @php
     use Illuminate\Support\Facades\Storage;
 @endphp
@@ -43,7 +40,7 @@
       @endphp
       <figure class="mt-5 rounded-xl overflow-hidden bg-neutral-100">
         <img src="{{ $cover }}" alt="{{ $post->title }}"
-             class="w-full aspect-[16/9] object-cover" loading="lazy">
+             class="w-full aspect-[16/9] object-cover" width="1280" height="720" decoding="async" fetchpriority="high" >
       </figure>
 
       {{-- Isi --}}
@@ -79,9 +76,8 @@
 
   {{-- Facebook --}}
   <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode($shareUrl) }}"
-     target="_blank" rel="noopener"
-     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-neutral-100 hover:bg-amber-100 text-blue-600">
-      <x-bi-facebook />
+     target="_blank" rel="noopener">
+      <x-bi-facebook class="w-4 h-4 text-blue-600"/>
   </a>
 
   {{-- Twitter / X --}}
@@ -130,7 +126,7 @@
                  class="group block rounded-xl overflow-hidden ring-1 ring-neutral-200 hover:ring-amber-200 bg-white">
                 <div class="aspect-[16/9] overflow-hidden bg-neutral-100">
                   <img src="{{ $relCover }}" alt="{{ $rel->title }}"
-                       class="w-full h-full object-cover group-hover:scale-105 transition">
+                       class="w-full aspect-[16/9] object-cover group-hover:opacity-95 transition" width="640" height="360" decoding="async" loading="lazy">
                 </div>
                 <div class="p-3">
                   <div class="text-xs text-neutral-500 mb-1">
@@ -165,7 +161,7 @@
                    class="grid grid-cols-12 gap-3 items-center rounded-lg hover:bg-neutral-50 p-2">
                   <div class="col-span-4">
                     <div class="aspect-[16/10] rounded-md overflow-hidden bg-neutral-100">
-                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-24 h-16 rounded object-cover flex-none"  width="192" height="128" decoding="async" loading="lazy">
                     </div>
                   </div>
                   <div class="col-span-8">
@@ -201,7 +197,7 @@
                    class="grid grid-cols-12 gap-3 items-center rounded-lg hover:bg-neutral-50 p-2">
                   <div class="col-span-4">
                     <div class="aspect-[16/10] rounded-md overflow-hidden bg-neutral-100">
-                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-full h-full object-cover">
+                      <img src="{{ $thumb }}" alt="{{ $item->title }}" class="w-24 h-16 rounded object-cover flex-none"  width="192" height="128" decoding="async" loading="lazy">
                     </div>
                   </div>
                   <div class="col-span-8">

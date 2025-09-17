@@ -22,23 +22,32 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
 use App\Filament\Widgets\RckInfoWidget;
+use Illuminate\Support\Facades\Schema;
 
 class AdminPanelProvider extends PanelProvider
 {
 
     public function panel(Panel $panel): Panel
     {
-        $settings = SiteSetting::first();
-
-        $brandName = $settings?->site_name ?? config('app.name');
-        $brandLogo = $settings?->logo_path
-            ? Storage::url($settings->logo_path)
-            : null;
+        $brandName = config('app.name');
+        $brandLogo = null;
+        $favicon = null;
+        if (!app()->runningInConsole() && Schema::hasTable('site_settings')) {
+            if ($settings = SiteSetting::first()) {
+                $brandName = $settings->site_name ?? $brandName;
+                $brandLogo = $settings->logo_path
+                    ? Storage::url($settings->logo_path)
+                    : null;
+                $favicon = $settings->favicon_path
+                    ? Storage::url($settings->favicon_path)
+                    : null;
+            }
+        }
         return $panel
             ->authGuard('web')
             ->brandName($brandName)
             ->brandLogo($brandLogo)
-            ->favicon($settings?->favicon_path ? Storage::url($settings->favicon_path) : null)
+            ->favicon($favicon)
             ->default()
             ->id('admin')
             ->path('admin')

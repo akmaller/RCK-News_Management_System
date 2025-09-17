@@ -18,7 +18,7 @@
              x-show="active === index">
 
             <img :src="post.thumbnail ? '/storage/' + post.thumbnail : 'https://picsum.photos/1000/600?random=' + post.id"
-                 alt="" class="w-full h-full object-cover rounded-2xl">
+                 alt="" class="w-full h-full object-cover rounded-2xl" width="1280" height="720" loading="lazy" decoding="async">
             <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
               <h2 class="text-white text-2xl font-bold" x-text="post.title"></h2>
               <p class="text-sm text-gray-200 mt-2">
@@ -62,7 +62,7 @@
         <a href="{{ $post->permalink }}">
           <div class="aspect-[16/9] overflow-hidden">
             <img src="{{ $post->thumbnail ? asset('storage/'.$post->thumbnail) : 'https://picsum.photos/600/338?random='.$post->id }}"
-                 alt="{{ $post->title }}" class="w-full h-full object-cover">
+                 alt="{{ $post->title }}" class="w-full aspect-[16/9] object-cover" width="800" height="450" loading="lazy" decoding="async">
           </div>
         </a>
         <div class="p-5">
