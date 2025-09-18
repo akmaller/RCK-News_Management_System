@@ -2,25 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 
 class User extends Authenticatable
 {
     use HasRoles;
     protected $guard_name = 'web';
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
@@ -29,6 +24,16 @@ class User extends Authenticatable
         'phone',
         'bio',
     ];
+
+    protected $hidden = ['password', 'remember_token'];
+
+    protected function casts(): array
+    {
+        return [
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+        ];
+    }
     public function getAvatarUrlAttribute(): ?string
     {
         if (!$this->avatar_path) {
@@ -38,26 +43,16 @@ class User extends Authenticatable
         // Opsi 1 (disarankan): gunakan Storage::url()
         return Storage::url($this->avatar_path);
     }
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public function canAccessPanel(Panel $panel): bool
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        // sementara: izinkan semua user yang sudah login
+        return true;
+
+        // atau lebih aman, jika punya kolom is_admin:
+        // return (bool) $this->is_admin;
+
+        // atau batasi by email:
+        // return in_array($this->email, ['admin@rckmanagement.com']);
     }
 }
