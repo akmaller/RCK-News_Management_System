@@ -62,6 +62,12 @@ Jalankan migration:
 php artisan migrate --force
 ```
 
+Jalankan seeder (optional):
+
+```bash
+php artisan db:seed
+```
+
 Buat user admin Filament:
 
 ```bash
@@ -124,9 +130,8 @@ Project ini dirilis di bawah lisensi [MIT](https://opensource.org/licenses/MIT).
 
 ---
 
-## 👤 Author
+## 👤 Author : Akmaller
 
-Akmaller
 Dikembangkan oleh **PT. Roemah Cita Kreatif**  
 ✉️ info@roemahcita.id  
 🌐 [roemahcita.id](https://roemahcita.id)

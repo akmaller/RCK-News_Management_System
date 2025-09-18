@@ -6,12 +6,11 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard;
+use App\Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\Navigation\NavigationGroup;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -22,13 +21,20 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use App\Models\SiteSetting;
 use Illuminate\Support\Facades\Storage;
 use App\Filament\Widgets\RckInfoWidget;
+use App\Filament\Widgets\ViewsChart;
+use App\Filament\Widgets\PostsStatsOverview;
+use App\Filament\Widgets\ServerInfo;
 use Illuminate\Support\Facades\Schema;
+
 
 class AdminPanelProvider extends PanelProvider
 {
 
     public function panel(Panel $panel): Panel
     {
+        // Ensure component cache reflects the latest widget/page configuration.
+        // $panel->clearCachedComponents();
+
         $brandName = config('app.name');
         $brandLogo = null;
         $favicon = null;
@@ -62,8 +68,11 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,   // “Welcome / Sign out” widget
+
+                PostsStatsOverview::class,
+                ViewsChart::class,
                 RckInfoWidget::class,   // widget custom pengganti Filament info
+                ServerInfo::class,
             ])
             ->middleware([
                 EncryptCookies::class,
