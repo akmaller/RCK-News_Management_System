@@ -62,7 +62,7 @@ Jalankan migration:
 php artisan migrate --force
 ```
 
-Jalankan migration:
+Jalankan seeder (optional):
 
 ```bash
 php artisan db:seed
