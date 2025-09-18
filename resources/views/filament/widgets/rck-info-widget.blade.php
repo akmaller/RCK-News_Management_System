@@ -19,6 +19,15 @@
             >
                 Dokumentasi
             </x-filament::button>
+
+            <x-filament::button
+                tag="a"
+                href="https://github.com/akmaller/RCK-News_Management_System"
+                target="_blank"
+                icon="heroicon-o-information-circle"
+            >
+                Github
+            </x-filament::button>
         </div>
     </x-filament::section>
 </x-filament-widgets::widget>

@@ -14,13 +14,17 @@ class PostView extends Model
         'viewed_at',
     ];
 
-    protected $casts = [
-        'viewed_at' => 'datetime',
-    ];
-
     public function post()
     {
         return $this->belongsTo(Post::class);
     }
+    protected $table = 'post_views';
+    public $timestamps = true; // created_at & updated_at ada di tabel
+
+    // gunakan viewed_at jika ada, fallback ke created_at
+    protected $casts = [
+        'viewed_at' => 'datetime',
+        'created_at' => 'datetime',
+    ];
 
 }
