@@ -13,6 +13,14 @@
         <div class="mt-4">
             <x-filament::button
                 tag="a"
+                href=" {{ route('home') }}"
+                target="_blank"
+                icon="heroicon-o-home"
+            >
+                Kunjungi Web
+            </x-filament::button>
+            <x-filament::button
+                tag="a"
                 href="https://www.rcknet.id/RCK_News_Management_System_Documentation.html#konfigurasi"
                 target="_blank"
                 icon="heroicon-o-book-open"
@@ -28,6 +36,7 @@
             >
                 Github
             </x-filament::button>
+
         </div>
     </x-filament::section>
 </x-filament-widgets::widget>

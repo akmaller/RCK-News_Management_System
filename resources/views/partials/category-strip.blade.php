@@ -3,11 +3,6 @@
 @if($cats->isNotEmpty())
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div>
-            {{-- masker gradasi di sisi kiri/kanan biar manis --}}
-            <div class="pointer-events-none absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-white to-transparent"></div>
-            <div class="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white to-transparent"></div>
-
-            {{-- rail horizontal --}}
             <div class="overflow-x-auto scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-track-transparent">
                 <div class="flex gap-2 overflow-x-auto py-2 scroll-px-4 snap-x snap-mandatory [-webkit-overflow-scrolling:touch]">
                     @foreach($cats as $i => $cat)

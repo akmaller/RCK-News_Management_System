@@ -12,7 +12,10 @@ class PostsStatsOverview extends BaseWidget
     public function getColumns(): int|array
     {
         return [
+            'xs' => 3,
+            'sm' => 3,
             'md' => 3,
+            'lg' => 3,
         ];
     }
     protected int|string|array $columnSpan = [

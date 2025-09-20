@@ -34,6 +34,10 @@ class PostController extends Controller
             'slug' => $post->slug,
         ]));
         SEOTools::opengraph()->addProperty('type', 'article');
+        $ogImage = $post->og_image_url; // accessor dari model
+        SEOTools::opengraph()->addImage($ogImage);
+        SEOTools::twitter()->addImage($ogImage);
+        SEOTools::twitter()->setType('summary_large_image');
 
         // --- Canonical guard: cocokkan {bulan}/{tahun} dengan published_at post ---
         if ($post->published_at) {

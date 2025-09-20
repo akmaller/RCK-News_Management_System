@@ -129,9 +129,20 @@ class Post extends Model
     }
     public function getThumbUrlAttribute(): string
     {
-        return $this->thumbnail
-            ? Storage::disk('public')->exists($this->thumbnail)
-            : asset('images/placeholder-640x360.jpg'); // siapkan file placeholder ini
+        // Kembalikan URL absolut ke thumbnail atau placeholder
+        if ($this->thumbnail && Storage::disk('public')->exists($this->thumbnail)) {
+            // Storage::url() akan menghasilkan /storage/xxx -> jadi absolutkan dengan asset()
+            return asset(Storage::url($this->thumbnail));
+        }
+
+        // Pastikan file placeholder tersedia di public/images/
+        return asset('images/example-middle.webp');
+    }
+
+    public function getOgImageUrlAttribute(): string
+    {
+        // Kalau kamu punya field lain seperti $this->image, bisa diprioritaskan di sini
+        return $this->thumb_url; // pakai accessor di atas sebagai default
     }
     public function views()
     {
