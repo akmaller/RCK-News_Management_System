@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-
-
 @section('content')
 
 {{-- GRID 2:1 --}}

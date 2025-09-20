@@ -10,9 +10,9 @@
             <span class="text-neutral-700">{{ $page->title }}</span>
         </nav>
 
-    <div class="grid grid-cols-12 gap-6">
+    <div class="grid grid-cols-12 gap-6 lg:gap-8">
             {{-- Konten --}}
-            <article class="lg:col-span-8">
+            <article class="col-span-12 lg:col-span-8 md:col-span-8 sm:col-span-8">
                 @if(!empty($page->thumbnail))
                     <figure class="mt-6">
                         @php
@@ -41,7 +41,7 @@
             </article>
 
             {{-- SIDEBAR (1 bagian) --}}
-    <aside class="col-span-12 lg:col-span-4">
+    <aside class="col-span-12 lg:col-span-4 md:col-span-4">
 
       <div class="mb-8">
             <x-ad-slot location="sidebar" />
